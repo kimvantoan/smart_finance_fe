@@ -1,5 +1,5 @@
 import { Outlet } from "@tanstack/react-router";
-import { Toaster, toast } from "sonner";
+import { Toaster } from "sonner";
 
 export function MainLayout() {
   return (
