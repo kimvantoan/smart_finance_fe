@@ -4,12 +4,14 @@ import { useTranslation } from "react-i18next";
 import i18n from "@/app/i18n";
 import { toast } from "sonner";
 import { Spinner } from "@/shared/components/ui/spinner";
+import { Link } from "@tanstack/react-router";
 function App() {
   const [count, setCount] = useState(0);
   const { t } = useTranslation("common");
 
   return (
     <>
+    <Link to="/login">Login</Link> 
     <Spinner />
       <Button
         variant="destructive"
