@@ -8,18 +8,18 @@ import {
 } from "@/shared/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import { useTranslation } from "react-i18next";
-import { verifyRoute } from "../routes/verify.route";
 import {
   useResendOtpMutation,
   useVerifyOtpMutation,
 } from "../api/auth.mutation";
 import { useEffect, useState } from "react";
 import { Spinner } from "@/shared/components/ui/spinner";
+import { Route } from "@/routes/(auth)/verify-otp";
 
 const VerifyPage = () => {
   const { t } = useTranslation("auth");
   const mutationResend = useResendOtpMutation();
-  const { email, expiredAt } = verifyRoute.useSearch();
+  const { email, expiredAt } = Route.useSearch();
   const [timeLeft, setTimeLeft] = useState(() => {
     return Math.max(0, expiredAt - Date.now());
   });
