@@ -14,6 +14,8 @@
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: "/auth/login",
-    PROFILE: "/auth/me",
+    SIGNUP: "/auth/register",
+    RESEND_OTP: "/auth/resend-otp",
+    VERIFY_OTP: "/auth/verify-otp",
   },
 } as const;
