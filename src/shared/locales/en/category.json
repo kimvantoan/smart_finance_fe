@@ -1,0 +1,13 @@
+{
+  "category": {
+    "expense": "Expense",
+    "income": "Income",
+    "add_category": "Add Category",
+    "edit_category": "Edit Category",
+    "category_name": "Category Name",
+    "select_icon": "Select an icon",
+    "save_category": "Save Category",
+    "active": "Active",
+    "inactive": "Inactive"
+  }
+}

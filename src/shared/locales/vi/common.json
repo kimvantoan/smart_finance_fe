@@ -1,5 +1,11 @@
 {
     "common": {
-        "title": "xin chao the gioi!"
+        "title": "xin chao the gioi!",
+        "home": "Tổng quan",
+        "category": "Danh mục",
+        "transaction": "Giao dịch",
+        "personal": "Cá nhân",
+        "cancel": "Hủy",
+        "delete": "Xóa"
     }
 }

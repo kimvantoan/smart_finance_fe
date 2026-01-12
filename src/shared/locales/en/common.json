@@ -1,5 +1,11 @@
 {
     "common": {
-        "title": "Hello world!"
+        "title": "Hello world!",
+        "home": "Home",
+        "category": "Category",
+        "transaction": "Transaction",
+        "personal": "Personal",
+        "cancel": "Cancel",
+        "delete": "Delete"
     }
 }

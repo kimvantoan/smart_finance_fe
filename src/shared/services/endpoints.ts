@@ -18,4 +18,11 @@ export const API_ENDPOINTS = {
     RESEND_OTP: "/auth/resend-otp",
     VERIFY_OTP: "/auth/verify-otp",
   },
+  CATEGORY:{
+    GET_CATEGORIES: "/categories",
+    GET_CATEGORY: (categoryId: number) => `/categories/${categoryId}`,
+    CREATE_CATEGORY: "/categories",
+    UPDATE_CATEGORY: (categoryId: number) => `/categories/${categoryId}`,
+    DELETE_CATEGORY: (categoryId: number) => `/categories/${categoryId}`,
+  }
 } as const;

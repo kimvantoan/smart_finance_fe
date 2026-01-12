@@ -8,13 +8,17 @@ import { useTranslation } from "react-i18next";
 import { setTokens } from "@/shared/utils/token";
 
 export const useLoginMutation = () => {
-  const { t } = useTranslation("auth");
+  const navigate = useNavigate();
+    const { t } = useTranslation("auth");
   return useMutation({
     mutationFn: (payload: LoginPayload) => {
       return authApi.login(payload);
     },
     onSuccess(data) {
-      setTokens(data.data);
+      setTokens(data.data.data);
+      navigate({
+        to: "/",
+      });
     },
     onError: (error: ApiErrorResponse) => {
       if (error.statusCode === 401) {

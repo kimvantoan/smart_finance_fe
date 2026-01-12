@@ -6,7 +6,8 @@ import enCommon from '@/shared/locales/en/common.json'
 import viCommon from '@/shared/locales/vi/common.json'
 import enAuth from '@/shared/locales/en/auth.json'
 import viAuth from '@/shared/locales/vi/auth.json'
-
+import enCategory from '@/shared/locales/en/category.json'
+import viCategory from '@/shared/locales/vi/category.json'
 i18n
   .use(LanguageDetector) // detect browser language
   .use(initReactI18next)
@@ -19,10 +20,12 @@ i18n
     resources: {
       en: {
         common: enCommon,
+        category: enCategory,
         auth: enAuth,
       },
       vi: {
         common: viCommon,
+        category: viCategory,
         auth: viAuth,
       },
     },
