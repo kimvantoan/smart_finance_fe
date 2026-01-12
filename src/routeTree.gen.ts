@@ -9,18 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
+import { Route as appRouteRouteImport } from './routes/(app)/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as authVerifyOtpRouteImport } from './routes/(auth)/verify-otp'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as appCategoryIndexRouteImport } from './routes/(app)/category/index'
+import { Route as appCategoryAddRouteImport } from './routes/(app)/category/add'
+import { Route as appCategoryIdEditRouteImport } from './routes/(app)/category/$id.edit'
 
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const authRouteRoute = authRouteRouteImport.update({
   id: '/(auth)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const appRouteRoute = appRouteRouteImport.update({
+  id: '/(app)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const authVerifyOtpRoute = authVerifyOtpRouteImport.update({
@@ -38,58 +47,111 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => authRouteRoute,
 } as any)
+const appCategoryIndexRoute = appCategoryIndexRouteImport.update({
+  id: '/category/',
+  path: '/category/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appCategoryAddRoute = appCategoryAddRouteImport.update({
+  id: '/category/add',
+  path: '/category/add',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appCategoryIdEditRoute = appCategoryIdEditRouteImport.update({
+  id: '/category/$id/edit',
+  path: '/category/$id/edit',
+  getParentRoute: () => appRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/verify-otp': typeof authVerifyOtpRoute
+  '/category/add': typeof appCategoryAddRoute
+  '/category': typeof appCategoryIndexRoute
+  '/category/$id/edit': typeof appCategoryIdEditRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/verify-otp': typeof authVerifyOtpRoute
+  '/category/add': typeof appCategoryAddRoute
+  '/category': typeof appCategoryIndexRoute
+  '/category/$id/edit': typeof appCategoryIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/(app)': typeof appRouteRouteWithChildren
   '/(auth)': typeof authRouteRouteWithChildren
-  '/_authenticated': typeof AuthenticatedRouteRoute
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/signup': typeof authSignupRoute
   '/(auth)/verify-otp': typeof authVerifyOtpRoute
+  '/(app)/category/add': typeof appCategoryAddRoute
+  '/(app)/category/': typeof appCategoryIndexRoute
+  '/(app)/category/$id/edit': typeof appCategoryIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/signup' | '/verify-otp'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/verify-otp'
+    | '/category/add'
+    | '/category'
+    | '/category/$id/edit'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/verify-otp'
+  to:
+    | '/'
+    | '/login'
+    | '/signup'
+    | '/verify-otp'
+    | '/category/add'
+    | '/category'
+    | '/category/$id/edit'
   id:
     | '__root__'
+    | '/'
+    | '/(app)'
     | '/(auth)'
-    | '/_authenticated'
     | '/(auth)/login'
     | '/(auth)/signup'
     | '/(auth)/verify-otp'
+    | '/(app)/category/add'
+    | '/(app)/category/'
+    | '/(app)/category/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  appRouteRoute: typeof appRouteRouteWithChildren
   authRouteRoute: typeof authRouteRouteWithChildren
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(auth)': {
       id: '/(auth)'
       path: ''
       fullPath: ''
       preLoaderRoute: typeof authRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(app)': {
+      id: '/(app)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof appRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/(auth)/verify-otp': {
@@ -113,8 +175,45 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof authRouteRoute
     }
+    '/(app)/category/': {
+      id: '/(app)/category/'
+      path: '/category'
+      fullPath: '/category'
+      preLoaderRoute: typeof appCategoryIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/category/add': {
+      id: '/(app)/category/add'
+      path: '/category/add'
+      fullPath: '/category/add'
+      preLoaderRoute: typeof appCategoryAddRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/category/$id/edit': {
+      id: '/(app)/category/$id/edit'
+      path: '/category/$id/edit'
+      fullPath: '/category/$id/edit'
+      preLoaderRoute: typeof appCategoryIdEditRouteImport
+      parentRoute: typeof appRouteRoute
+    }
   }
 }
+
+interface appRouteRouteChildren {
+  appCategoryAddRoute: typeof appCategoryAddRoute
+  appCategoryIndexRoute: typeof appCategoryIndexRoute
+  appCategoryIdEditRoute: typeof appCategoryIdEditRoute
+}
+
+const appRouteRouteChildren: appRouteRouteChildren = {
+  appCategoryAddRoute: appCategoryAddRoute,
+  appCategoryIndexRoute: appCategoryIndexRoute,
+  appCategoryIdEditRoute: appCategoryIdEditRoute,
+}
+
+const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
+  appRouteRouteChildren,
+)
 
 interface authRouteRouteChildren {
   authLoginRoute: typeof authLoginRoute
@@ -133,8 +232,9 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  appRouteRoute: appRouteRouteWithChildren,
   authRouteRoute: authRouteRouteWithChildren,
-  AuthenticatedRouteRoute: AuthenticatedRouteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

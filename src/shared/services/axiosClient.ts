@@ -104,7 +104,7 @@ axiosClient.interceptors.response.use(
    * Response thành công
    * -> trả thẳng data theo ResponseType<T>
    */
-  (response) => response.data,
+  (response) => response,
 
   /**
    * Response lỗi
