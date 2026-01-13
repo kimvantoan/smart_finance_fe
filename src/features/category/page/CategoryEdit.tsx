@@ -1,4 +1,3 @@
-import { TypographyH2 } from "@/shared/components/common/TypographyH2";
 import {
   Field,
   FieldError,
@@ -9,14 +8,6 @@ import {
   InputGroup,
   InputGroupInput,
 } from "@/shared/components/ui/input-group";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/components/ui/select";
 import { Switch } from "@/shared/components/ui/switch";
 import { useForm } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
@@ -36,7 +27,10 @@ import { formSchema, type CategoryPayload } from "../type";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Route } from "@/routes/(app)/category/$id.edit";
 import { categoryQueryOptions } from "../api/category.query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { ChevronLeft, Trash2 } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
+import { TypographyMuted } from "@/shared/components/common/TypographyMuted";
 
 const CategoryEdit = () => {
   const { id } = Route.useLoaderData();
@@ -45,9 +39,11 @@ const CategoryEdit = () => {
   const mutation = useUpdateCategories();
   const mutationDelete = useDeleteCategory();
   const { data: category } = useSuspenseQuery(categoryQueryOptions(id)).data;
+  const [type, setType] = useState<"INCOME" | "EXPENSE">(category?.type ?? "EXPENSE");
+
   const defaultValues: CategoryPayload = {
     name: "",
-    type: "INCOME",
+    type,
     iconKey: "",
     status: "ACTIVE",
   };
@@ -74,10 +70,17 @@ const CategoryEdit = () => {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <Link to="/category">{m("common.cancel")}</Link>
-        <TypographyH2 text={t("category.edit_category")} />
-        <Button onClick={() => mutationDelete.mutate(id)} variant={"ghost"}>
-          {m("common.delete")}
+        <Link to="/category">
+          <ChevronLeft />
+        </Link>
+        <b>{m("common.edit")}</b>
+        <Button
+          size={"icon-lg"}
+          className="text-destructive"
+          onClick={() => mutationDelete.mutate(id)}
+          variant={"ghost"}
+        >
+          <Trash2 />
         </Button>
       </div>
       <form
@@ -87,16 +90,44 @@ const CategoryEdit = () => {
         }}
       >
         <FieldGroup>
+          <Tabs defaultValue={type} className="w-full mt-4">
+            <TabsList className="w-full">
+              <TabsTrigger
+                className="text-primary"
+                onClick={() => {
+                  setType("INCOME");
+                  form.setFieldValue("type", "INCOME");
+                }}
+                value="INCOME"
+              >
+                {m("common.income")}
+              </TabsTrigger>
+              <TabsTrigger
+                className="text-destructive"
+                onClick={() => {
+                  setType("EXPENSE");
+                  form.setFieldValue("type", "EXPENSE");
+                }}
+                value="EXPENSE"
+              >
+                {m("common.expense")}
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
           <form.Field
             name="name"
             children={(field) => {
               return (
                 <Field>
-                  <FieldLabel>{t("category.category_name")}</FieldLabel>
+                  <FieldLabel>
+                    {t("category.category_name").toUpperCase()}
+                  </FieldLabel>
                   <InputGroup>
                     <InputGroupInput
-                      required
                       value={field.state.value}
+                      required
+                      className="bg-gray-50"
+                      placeholder={t("category.exemple_name")}
                       onChange={(e) => field.handleChange(e.target.value)}
                       type="text"
                     />
@@ -106,33 +137,37 @@ const CategoryEdit = () => {
               );
             }}
           />
+
           <form.Field
-            name="type"
+            name="iconKey"
             children={(field) => {
               return (
                 <Field>
-                  <FieldLabel>Type</FieldLabel>
-                  <Select
-                    key={field.state.value}
-                    value={field.state.value}
-                    onValueChange={(value) =>
-                      field.setValue(value as "INCOME" | "EXPENSE")
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="INCOME">
-                          {t("category.income")}
-                        </SelectItem>
-                        <SelectItem value="EXPENSE">
-                          {t("category.expense")}
-                        </SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <FieldLabel>
+                    {t("category.select_icon").toUpperCase()}
+                  </FieldLabel>
+                  <ToggleGroup value={field.state.value} className="flex-wrap gap-3" type="single">
+                    {ICON_KEYS.map((iconKey) => (
+                      <ToggleGroupItem
+                        key={iconKey}
+                        value={iconKey}
+                        className="
+                        flex items-center justify-center size-10
+                        text-gray-500 border shadow 
+                        transition-colors active:scale-90
+
+                        data-[state=on]:bg-primary 
+                        data-[state=off]:bg-gray-50 
+                        data-[state=on]:text-white
+                        data-[state=on]:border-primary
+                      "
+                        aria-label={`Toggle ${iconKey}`}
+                        onClick={() => field.handleChange(iconKey)}
+                      >
+                        <AppIcon name={iconKey} />
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
                   <FieldError errors={field.state.meta.errors} />
                 </Field>
               );
@@ -143,41 +178,19 @@ const CategoryEdit = () => {
             children={(field) => {
               return (
                 <Field>
-                  <FieldLabel>Status</FieldLabel>
-                  <Switch
-                    key={field.state.value}
-                    checked={field.state.value === "ACTIVE"}
-                    onCheckedChange={(checked) =>
-                      field.setValue(checked ? "ACTIVE" : "INACTIVE")
-                    }
-                  />
-                  <FieldError errors={field.state.meta.errors} />
-                </Field>
-              );
-            }}
-          />
-          <form.Field
-            name="iconKey"
-            children={(field) => {
-              return (
-                <Field>
-                  <FieldLabel>{t("category.select_icon")}</FieldLabel>
-                  <ToggleGroup
-                    value={field.state.value}
-                    className="flex-wrap"
-                    type="single"
-                  >
-                    {ICON_KEYS.map((iconKey) => (
-                      <ToggleGroupItem
-                        key={iconKey}
-                        value={iconKey}
-                        aria-label={`Toggle ${iconKey}`}
-                        onClick={() => field.handleChange(iconKey)}
-                      >
-                        <AppIcon name={iconKey} />
-                      </ToggleGroupItem>
-                    ))}
-                  </ToggleGroup>
+                  <div className="flex items-center justify-between border p-3 rounded-xl bg-gray-50">
+                    <div>
+                      <b>{t("category.status_active")}</b>
+                      <TypographyMuted text={t("category.display_create")} />
+                    </div>
+                    <Switch
+                      checked={field.state.value === "ACTIVE"}
+                      onCheckedChange={(checked) =>
+                        field.setValue(checked ? "ACTIVE" : "INACTIVE")
+                      }
+                    />
+                  </div>
+
                   <FieldError errors={field.state.meta.errors} />
                 </Field>
               );

@@ -40,19 +40,19 @@ const Categories = () => {
       </div>
       <Tabs defaultValue="expense" className="w-full mt-4">
         <TabsList className="w-full">
-          <TabsTrigger onClick={() => setType("EXPENSE")} value="expense">
+          <TabsTrigger className="text-destructive" onClick={() => setType("EXPENSE")} value="expense">
             {t("category.expense")}
           </TabsTrigger>
-          <TabsTrigger onClick={() => setType("INCOME")} value="income">
+          <TabsTrigger className="text-primary" onClick={() => setType("INCOME")} value="income">
             {t("category.income")}
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="income">
+        <TabsContent value="income" className="space-y-3">
           {data.dataList?.map((category) => (
             <CategoryItem key={category.id} category={category} />
           ))}
         </TabsContent>
-        <TabsContent value="expense">
+        <TabsContent value="expense" className="space-y-3">
           {data.dataList?.map((category) => (
             <CategoryItem key={category.id} category={category} />
           ))}

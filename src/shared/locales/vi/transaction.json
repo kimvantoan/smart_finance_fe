@@ -1,0 +1,8 @@
+{
+  "transaction": {
+    "transaction": "Giao dịch",
+    "add_transaction": "Thêm giao dịch",
+    "amount": "Số tiền",
+    "note": "Ghi chú"
+  }
+}

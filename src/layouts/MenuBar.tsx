@@ -1,34 +1,35 @@
-import { TypographyP } from "@/shared/components/common/TypographyP";
+import { TypographySmall } from "@/shared/components/common/TypographySmall";
 import { Link } from "@tanstack/react-router";
 import { BookText, Layers, ReceiptText, User } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const MenuBar = () => {
   const { t } = useTranslation("common");
+  const active = "text-primary";
   return (
-    <div className="flex justify-around items-center w-full fixed bottom-0 left-0 border-t py-2 shadow-md">
-      <Link to="/category">
-        <div className="flex flex-col items-center">
+    <div className="flex bg-white justify-around items-center w-full fixed bottom-0 left-0 py-4 shadow border-t">
+      <Link to="/category" activeProps={{ className: active }}>
+        <div className="flex flex-col gap-2 items-center">
           <Layers />
-          <TypographyP text={t("common.home")} />
+          <TypographySmall text={t("common.home")} />
         </div>
       </Link>
-      <Link to="/category">
-        <div className="flex flex-col items-center">
+      <Link to="/category" activeProps={{ className: active }}>
+        <div className="flex flex-col items-center gap-2">
           <BookText />
-          <TypographyP text={t("common.category")} />
+          <TypographySmall text={t("common.category")} />
         </div>
       </Link>
-      <Link to="/category">
-        <div className="flex flex-col items-center">
+      <Link to="/transaction" activeProps={{ className: active }}>
+        <div className="flex flex-col items-center gap-2">
           <ReceiptText />
-          <TypographyP text={t("common.transaction")} />
+          <TypographySmall text={t("common.transaction")} />
         </div>
       </Link>
-      <Link to="/category">
-        <div className="flex flex-col items-center">
+      <Link to="/category" activeProps={{ className: active }}>
+        <div className="flex flex-col items-center gap-2">
           <User />
-          <TypographyP text={t("common.personal")} />
+          <TypographySmall text={t("common.personal")} />
         </div>
       </Link>
     </div>

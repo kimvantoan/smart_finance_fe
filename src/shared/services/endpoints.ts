@@ -24,5 +24,12 @@ export const API_ENDPOINTS = {
     CREATE_CATEGORY: "/categories",
     UPDATE_CATEGORY: (categoryId: number) => `/categories/${categoryId}`,
     DELETE_CATEGORY: (categoryId: number) => `/categories/${categoryId}`,
+  },
+  TRANSACTION:{
+    GET_TRANSACTIONS: "/transactions",
+    GET_TRANSACTION: (transactionId: number) => `/transactions/${transactionId}`,
+    CREATE_TRANSACTION: "/transactions",
+    UPDATE_TRANSACTION: (transactionId: number) => `/transactions/${transactionId}`,
+    DELETE_TRANSACTION: (transactionId: number) => `/transactions/${transactionId}`,
   }
 } as const;

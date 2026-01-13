@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const CategoryItem = ({ category }: { category: Category }) => {
   const navigate = useNavigate();
-  const {t} = useTranslation("category");
+  const { t } = useTranslation("category");
   const getStatusText = (status: string) => {
     switch (status) {
       case "ACTIVE":
@@ -13,7 +13,7 @@ const CategoryItem = ({ category }: { category: Category }) => {
       case "INACTIVE":
         return t("category.inactive");
       default:
-        return '';
+        return "";
     }
   };
   const handleClick = () => {
@@ -24,11 +24,11 @@ const CategoryItem = ({ category }: { category: Category }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex items-center justify-between p-4 border rounded-md mb-2"
+      className="flex items-center justify-between p-4 rounded-md shadow bg-white"
     >
-      <div>
+      <div className="space-y-2">
         <AppIcon name={category.iconKey} />
-        <p className="text-lg font-semibold">{category.name}</p>
+        <b>{category.name}</b>
       </div>
       <p className="text-sm text-gray-500">{getStatusText(category.status)}</p>
     </div>

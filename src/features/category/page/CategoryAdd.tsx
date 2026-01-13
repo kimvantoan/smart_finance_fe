@@ -1,4 +1,3 @@
-import { TypographyH2 } from "@/shared/components/common/TypographyH2";
 import {
   Field,
   FieldError,
@@ -9,14 +8,7 @@ import {
   InputGroup,
   InputGroupInput,
 } from "@/shared/components/ui/input-group";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { Switch } from "@/shared/components/ui/switch";
 import { useForm } from "@tanstack/react-form";
 import { Link } from "@tanstack/react-router";
@@ -30,15 +22,19 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { useCreateCategory } from "../api/category.mutation";
 import { formSchema, type CategoryPayload } from "../type";
+import { useState } from "react";
+import { TypographyMuted } from "@/shared/components/common/TypographyMuted";
+import {  ChevronLeft } from "lucide-react";
 
 const CategoryAdd = () => {
   const { t } = useTranslation("category");
   const { t: m } = useTranslation("common");
   const mutation = useCreateCategory();
+  const [type, setType] = useState<"INCOME" | "EXPENSE">("EXPENSE");
 
   const defaultValues: CategoryPayload = {
     name: "",
-    type: "EXPENSE",
+    type,
     iconKey: "wallet",
     status: "ACTIVE",
   };
@@ -54,9 +50,11 @@ const CategoryAdd = () => {
 
   return (
     <div>
-      <div className="flex justify-between">
-        <Link to="..">{m("common.cancel")}</Link>
-        <TypographyH2 text={t("category.add_category")} />
+      <div className="flex justify-between items-center">
+        <Link to="..">
+          <ChevronLeft />
+        </Link>
+        <b>{m("common.add")}</b>
         <p></p>
       </div>
       <form
@@ -66,15 +64,43 @@ const CategoryAdd = () => {
         }}
       >
         <FieldGroup>
+          <Tabs defaultValue={type} className="w-full mt-4">
+            <TabsList className="w-full">
+              <TabsTrigger
+                className="text-primary"
+                onClick={() => {
+                  setType("INCOME");
+                  form.setFieldValue("type", "INCOME");
+                }}
+                value="INCOME"
+              >
+                {m("common.income")}
+              </TabsTrigger>
+              <TabsTrigger
+                className="text-destructive"
+                onClick={() => {
+                  setType("EXPENSE");
+                  form.setFieldValue("type", "EXPENSE");
+                }}
+                value="EXPENSE"
+              >
+                {m("common.expense")}
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
           <form.Field
             name="name"
             children={(field) => {
               return (
                 <Field>
-                  <FieldLabel>{t("category.category_name")}</FieldLabel>
+                  <FieldLabel>
+                    {t("category.category_name").toUpperCase()}
+                  </FieldLabel>
                   <InputGroup>
                     <InputGroupInput
                       required
+                      className="bg-gray-50"
+                      placeholder={t("category.exemple_name")}
                       onChange={(e) => field.handleChange(e.target.value)}
                       type="text"
                     />
@@ -84,32 +110,37 @@ const CategoryAdd = () => {
               );
             }}
           />
+
           <form.Field
-            name="type"
+            name="iconKey"
             children={(field) => {
               return (
                 <Field>
-                  <FieldLabel>Type</FieldLabel>
-                  <Select
-                    value={field.state.value}
-                    onValueChange={(value) =>
-                      field.setValue(value as "INCOME" | "EXPENSE")
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        <SelectItem value="INCOME">
-                          {t("category.income")}
-                        </SelectItem>
-                        <SelectItem value="EXPENSE">
-                          {t("category.expense")}
-                        </SelectItem>
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
+                  <FieldLabel>
+                    {t("category.select_icon").toUpperCase()}
+                  </FieldLabel>
+                  <ToggleGroup className="flex-wrap gap-3" type="single">
+                    {ICON_KEYS.map((iconKey) => (
+                      <ToggleGroupItem
+                        key={iconKey}
+                        value={iconKey}
+                        className="
+                        flex items-center justify-center size-10
+                        text-gray-500 border shadow 
+                        transition-colors active:scale-90
+
+                        data-[state=on]:bg-primary 
+                        data-[state=off]:bg-gray-50 
+                        data-[state=on]:text-white
+                        data-[state=on]:border-primary
+                      "
+                        aria-label={`Toggle ${iconKey}`}
+                        onClick={() => field.handleChange(iconKey)}
+                      >
+                        <AppIcon name={iconKey} />
+                      </ToggleGroupItem>
+                    ))}
+                  </ToggleGroup>
                   <FieldError errors={field.state.meta.errors} />
                 </Field>
               );
@@ -120,35 +151,19 @@ const CategoryAdd = () => {
             children={(field) => {
               return (
                 <Field>
-                  <FieldLabel>Status</FieldLabel>
-                  <Switch
-                    onChange={(checked) =>
-                      field.setValue(checked ? "ACTIVE" : "INACTIVE")
-                    }
-                  />
-                  <FieldError errors={field.state.meta.errors} />
-                </Field>
-              );
-            }}
-          />
-          <form.Field
-            name="iconKey"
-            children={(field) => {
-              return (
-                <Field>
-                  <FieldLabel>{t("category.select_icon")}</FieldLabel>
-                  <ToggleGroup className="flex-wrap" type="single">
-                    {ICON_KEYS.map((iconKey) => (
-                      <ToggleGroupItem
-                        key={iconKey}
-                        value={iconKey}
-                        aria-label={`Toggle ${iconKey}`}
-                        onClick={() => field.handleChange(iconKey)}
-                      >
-                        <AppIcon name={iconKey} />
-                      </ToggleGroupItem>
-                    ))}
-                  </ToggleGroup>
+                  <div className="flex items-center justify-between border p-3 rounded-xl bg-gray-50">
+                    <div>
+                      <b>{t("category.status_active")}</b>
+                      <TypographyMuted text={t("category.display_create")} />
+                    </div>
+                    <Switch
+                      defaultChecked
+                      onChange={(checked) =>
+                        field.setValue(checked ? "ACTIVE" : "INACTIVE")
+                      }
+                    />
+                  </div>
+
                   <FieldError errors={field.state.meta.errors} />
                 </Field>
               );

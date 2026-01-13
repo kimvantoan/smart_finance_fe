@@ -2,9 +2,9 @@
 import * as Icons from "lucide-react";
 import type { IconKey } from "../types/IconKey";
 
-export function AppIcon({ name, ...props }: { name: IconKey }) {
+export function AppIcon({ name, className, ...props }: { name: IconKey, className?: string}) {
   const Icon = (Icons as any)[toPascalCase(name)];
-  return Icon ? <Icon {...props} /> : null;
+  return Icon ? <Icon className={className} {...props} /> : null;
 }
 
 function toPascalCase(str: string) {

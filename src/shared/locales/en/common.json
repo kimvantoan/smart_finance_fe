@@ -2,10 +2,17 @@
     "common": {
         "title": "Hello world!",
         "home": "Home",
+        "all": "All",
+        "income": "Income",
+        "expense": "Expense",
         "category": "Category",
         "transaction": "Transaction",
         "personal": "Personal",
         "cancel": "Cancel",
-        "delete": "Delete"
+        "delete": "Delete",
+        "save": "Save",
+        "add":"Add",
+        "edit":"Edit",
+        "date": "Date"
     }
 }
