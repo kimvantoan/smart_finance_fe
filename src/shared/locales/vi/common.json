@@ -6,6 +6,13 @@
         "transaction": "Giao dịch",
         "personal": "Cá nhân",
         "cancel": "Hủy",
-        "delete": "Xóa"
+        "delete": "Xóa",
+        "all": "Tất cả",
+        "income": "Thu nhập",
+        "expense": "Chi tiêu",
+        "save": "Lưu",
+        "add":"Tạo mới",
+        "edit":"Chỉnh sửa",
+        "date": "Ngày"
     }
 }

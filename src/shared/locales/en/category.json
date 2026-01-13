@@ -8,6 +8,9 @@
     "select_icon": "Select an icon",
     "save_category": "Save Category",
     "active": "Active",
-    "inactive": "Inactive"
+    "inactive": "Inactive",
+    "status_active":"Active status",
+    "display_create": "Display when create new transaction",
+    "exemple_name": "Exemple: Grocery, Shopping"
   }
 }

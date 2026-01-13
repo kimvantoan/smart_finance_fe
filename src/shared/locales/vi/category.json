@@ -1,14 +1,15 @@
 {
-    "category": {
-      "expense": "Chi tiêu",
-      "income": "Thu nhập",
-      "add_category": "Thêm danh mục",
-      "edit_category": "Chỉnh sửa danh mục",
-      "category_name": "Tên danh mục",
-      "select_icon": "Chọn biểu tượng",
-      "save_category": "Lưu danh mục",
-      "active": "Hoạt động",
-      "inactive": "Không hoạt động"
-    }
+  "category": {
+    "expense": "Chi tiêu",
+    "income": "Thu nhập",
+    "edit_category": "Chỉnh sửa danh mục",
+    "category_name": "Tên danh mục",
+    "select_icon": "Chọn biểu tượng",
+    "save_category": "Lưu danh mục",
+    "active": "Hoạt động",
+    "inactive": "Không hoạt động",
+    "status_active": "Trạng thái hoạt động",
+    "display_create": "Hiển thị khi tạo giao dịch mới",
+    "exemple_name": "Ví dụ: Ăn uống, Mua sắm"
   }
-  
+}

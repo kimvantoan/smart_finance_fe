@@ -15,8 +15,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as authVerifyOtpRouteImport } from './routes/(auth)/verify-otp'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
+import { Route as appTransactionIndexRouteImport } from './routes/(app)/transaction/index'
 import { Route as appCategoryIndexRouteImport } from './routes/(app)/category/index'
+import { Route as appTransactionAddRouteImport } from './routes/(app)/transaction/add'
 import { Route as appCategoryAddRouteImport } from './routes/(app)/category/add'
+import { Route as appTransactionIdEditRouteImport } from './routes/(app)/transaction/$id.edit'
 import { Route as appCategoryIdEditRouteImport } from './routes/(app)/category/$id.edit'
 
 const authRouteRoute = authRouteRouteImport.update({
@@ -47,14 +50,29 @@ const authLoginRoute = authLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => authRouteRoute,
 } as any)
+const appTransactionIndexRoute = appTransactionIndexRouteImport.update({
+  id: '/transaction/',
+  path: '/transaction/',
+  getParentRoute: () => appRouteRoute,
+} as any)
 const appCategoryIndexRoute = appCategoryIndexRouteImport.update({
   id: '/category/',
   path: '/category/',
   getParentRoute: () => appRouteRoute,
 } as any)
+const appTransactionAddRoute = appTransactionAddRouteImport.update({
+  id: '/transaction/add',
+  path: '/transaction/add',
+  getParentRoute: () => appRouteRoute,
+} as any)
 const appCategoryAddRoute = appCategoryAddRouteImport.update({
   id: '/category/add',
   path: '/category/add',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appTransactionIdEditRoute = appTransactionIdEditRouteImport.update({
+  id: '/transaction/$id/edit',
+  path: '/transaction/$id/edit',
   getParentRoute: () => appRouteRoute,
 } as any)
 const appCategoryIdEditRoute = appCategoryIdEditRouteImport.update({
@@ -69,8 +87,11 @@ export interface FileRoutesByFullPath {
   '/signup': typeof authSignupRoute
   '/verify-otp': typeof authVerifyOtpRoute
   '/category/add': typeof appCategoryAddRoute
+  '/transaction/add': typeof appTransactionAddRoute
   '/category': typeof appCategoryIndexRoute
+  '/transaction': typeof appTransactionIndexRoute
   '/category/$id/edit': typeof appCategoryIdEditRoute
+  '/transaction/$id/edit': typeof appTransactionIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,8 +99,11 @@ export interface FileRoutesByTo {
   '/signup': typeof authSignupRoute
   '/verify-otp': typeof authVerifyOtpRoute
   '/category/add': typeof appCategoryAddRoute
+  '/transaction/add': typeof appTransactionAddRoute
   '/category': typeof appCategoryIndexRoute
+  '/transaction': typeof appTransactionIndexRoute
   '/category/$id/edit': typeof appCategoryIdEditRoute
+  '/transaction/$id/edit': typeof appTransactionIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -90,8 +114,11 @@ export interface FileRoutesById {
   '/(auth)/signup': typeof authSignupRoute
   '/(auth)/verify-otp': typeof authVerifyOtpRoute
   '/(app)/category/add': typeof appCategoryAddRoute
+  '/(app)/transaction/add': typeof appTransactionAddRoute
   '/(app)/category/': typeof appCategoryIndexRoute
+  '/(app)/transaction/': typeof appTransactionIndexRoute
   '/(app)/category/$id/edit': typeof appCategoryIdEditRoute
+  '/(app)/transaction/$id/edit': typeof appTransactionIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,8 +128,11 @@ export interface FileRouteTypes {
     | '/signup'
     | '/verify-otp'
     | '/category/add'
+    | '/transaction/add'
     | '/category'
+    | '/transaction'
     | '/category/$id/edit'
+    | '/transaction/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -110,8 +140,11 @@ export interface FileRouteTypes {
     | '/signup'
     | '/verify-otp'
     | '/category/add'
+    | '/transaction/add'
     | '/category'
+    | '/transaction'
     | '/category/$id/edit'
+    | '/transaction/$id/edit'
   id:
     | '__root__'
     | '/'
@@ -121,8 +154,11 @@ export interface FileRouteTypes {
     | '/(auth)/signup'
     | '/(auth)/verify-otp'
     | '/(app)/category/add'
+    | '/(app)/transaction/add'
     | '/(app)/category/'
+    | '/(app)/transaction/'
     | '/(app)/category/$id/edit'
+    | '/(app)/transaction/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -175,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof authLoginRouteImport
       parentRoute: typeof authRouteRoute
     }
+    '/(app)/transaction/': {
+      id: '/(app)/transaction/'
+      path: '/transaction'
+      fullPath: '/transaction'
+      preLoaderRoute: typeof appTransactionIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/category/': {
       id: '/(app)/category/'
       path: '/category'
@@ -182,11 +225,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appCategoryIndexRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/transaction/add': {
+      id: '/(app)/transaction/add'
+      path: '/transaction/add'
+      fullPath: '/transaction/add'
+      preLoaderRoute: typeof appTransactionAddRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/category/add': {
       id: '/(app)/category/add'
       path: '/category/add'
       fullPath: '/category/add'
       preLoaderRoute: typeof appCategoryAddRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/transaction/$id/edit': {
+      id: '/(app)/transaction/$id/edit'
+      path: '/transaction/$id/edit'
+      fullPath: '/transaction/$id/edit'
+      preLoaderRoute: typeof appTransactionIdEditRouteImport
       parentRoute: typeof appRouteRoute
     }
     '/(app)/category/$id/edit': {
@@ -201,14 +258,20 @@ declare module '@tanstack/react-router' {
 
 interface appRouteRouteChildren {
   appCategoryAddRoute: typeof appCategoryAddRoute
+  appTransactionAddRoute: typeof appTransactionAddRoute
   appCategoryIndexRoute: typeof appCategoryIndexRoute
+  appTransactionIndexRoute: typeof appTransactionIndexRoute
   appCategoryIdEditRoute: typeof appCategoryIdEditRoute
+  appTransactionIdEditRoute: typeof appTransactionIdEditRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
   appCategoryAddRoute: appCategoryAddRoute,
+  appTransactionAddRoute: appTransactionAddRoute,
   appCategoryIndexRoute: appCategoryIndexRoute,
+  appTransactionIndexRoute: appTransactionIndexRoute,
   appCategoryIdEditRoute: appCategoryIdEditRoute,
+  appTransactionIdEditRoute: appTransactionIdEditRoute,
 }
 
 const appRouteRouteWithChildren = appRouteRoute._addFileChildren(
