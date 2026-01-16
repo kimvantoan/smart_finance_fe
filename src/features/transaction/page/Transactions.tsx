@@ -2,17 +2,10 @@
 import { TypographyH1 } from "@/shared/components/common/TypographyH1";
 import { Button } from "@/shared/components/ui/button";
 import { useNavigate } from "@tanstack/react-router";
-import { Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shared/components/ui/select";
 import { useTransactionQuery } from "../api/transaction.query";
 import TransactionItem from "../components/TransactionItem";
 import { useCategoriesQuery } from "@/features/category/api/category.query";
@@ -21,6 +14,7 @@ import { formatDateHeader } from "@/shared/utils/date";
 import { useReportQuery } from "@/features/report/api/report.query";
 import ReportTransaction from "../components/ReportTransaction";
 import { ScrollArea } from "@/shared/components/ui/scroll-area";
+import { TypographyH3 } from "@/shared/components/common/TypographyH3";
 const Transactions = () => {
   const { t } = useTranslation("transaction");
   const { t: m } = useTranslation("common");
@@ -33,7 +27,22 @@ const Transactions = () => {
   const { data } = useTransactionQuery({ type, month, year });
   const { data: categories } = useCategoriesQuery({});
   const { data: report } = useReportQuery({ year, month, type });
-  console.log(report);
+  const handleNextMonth = () => {
+    if (month === 12) {
+      setMonth(1);
+      setYear(year + 1);
+    } else {
+      setMonth(month + 1);
+    }
+  };
+  const handlePrevMonth = () => {
+    if (month === 1) {
+      setMonth(12);
+      setYear(year - 1);
+    } else {
+      setMonth(month - 1);
+    }
+  };
 
   const getCategory = (id: number) => {
     const category = categories?.dataList?.find((item) => item.id === id);
@@ -61,49 +70,21 @@ const Transactions = () => {
           <Plus />
         </Button>
       </div>
-      <div className="flex gap-3 items-center justify-center">
-        {/* Tháng hien tại */}
-        <Select
-          defaultValue={currentMonth}
-          onValueChange={(value) => setMonth(Number(value))}
-        >
-          <SelectTrigger id="checkout-exp-month-ts6">
-            <SelectValue placeholder="MM" />
-          </SelectTrigger>
-
-          <SelectContent>
-            {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => {
-              const value = String(month).padStart(2, "0");
-              return (
-                <SelectItem key={value} value={value}>
-                  {value}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
-
-        {/* Năm hien tại */}
-        <Select
-          defaultValue={currentYear}
-          onValueChange={(value) => setYear(Number(value))}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="YYYY" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="2024">2024</SelectItem>
-            <SelectItem value="2025">2025</SelectItem>
-            <SelectItem value="2026">2026</SelectItem>
-            <SelectItem value="2027">2027</SelectItem>
-            <SelectItem value="2028">2028</SelectItem>
-            <SelectItem value="2029">2029</SelectItem>
-          </SelectContent>
-        </Select>
+      <div className="flex items-center justify-between w-2/3 mx-auto mt-3 ">
+        <Button onClick={handlePrevMonth} variant={"ghost"} size={"icon"}>
+          <ChevronLeft />
+        </Button>
+        <TypographyH3 text={`${month > 0 ? `Tháng ${month},` : ""} ${year}`} />
+        <Button onClick={handleNextMonth} variant={"ghost"} size={"icon"}>
+          <ChevronRight />
+        </Button>
       </div>
-      <div className="grid grid-cols-2 gap-4 my-5 ">
-        <ReportTransaction type="INCOME" amount={report?.totalIncome} />
-        <ReportTransaction type="EXPENSE" amount={report?.totalExpense} />
+      <div className="space-y-2 my-5 ">
+        <ReportTransaction type="BALANCE" amount={report?.totalBalance} />
+        <div className="grid grid-cols-2 gap-2">
+          <ReportTransaction type="INCOME" amount={report?.totalIncome} />
+          <ReportTransaction type="EXPENSE" amount={report?.totalExpense} />
+        </div>
       </div>
 
       {/* type  */}
@@ -119,7 +100,7 @@ const Transactions = () => {
             {m("common.expense")}
           </TabsTrigger>
         </TabsList>
-        <ScrollArea className="h-[calc(100vh-350px)]">
+        <ScrollArea className="h-[calc(100vh-370px)]">
           {grouped &&
             Object.entries(grouped).map(([date, transactions]) => {
               const header = formatDateHeader(date);

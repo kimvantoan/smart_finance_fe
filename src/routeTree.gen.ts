@@ -11,11 +11,12 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as authRouteRouteImport } from './routes/(auth)/route'
 import { Route as appRouteRouteImport } from './routes/(app)/route'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as appIndexRouteImport } from './routes/(app)/index'
 import { Route as authVerifyOtpRouteImport } from './routes/(auth)/verify-otp'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as appTransactionIndexRouteImport } from './routes/(app)/transaction/index'
+import { Route as appReportIndexRouteImport } from './routes/(app)/report/index'
 import { Route as appCategoryIndexRouteImport } from './routes/(app)/category/index'
 import { Route as appTransactionAddRouteImport } from './routes/(app)/transaction/add'
 import { Route as appCategoryAddRouteImport } from './routes/(app)/category/add'
@@ -30,10 +31,10 @@ const appRouteRoute = appRouteRouteImport.update({
   id: '/(app)',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
+const appIndexRoute = appIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => appRouteRoute,
 } as any)
 const authVerifyOtpRoute = authVerifyOtpRouteImport.update({
   id: '/verify-otp',
@@ -53,6 +54,11 @@ const authLoginRoute = authLoginRouteImport.update({
 const appTransactionIndexRoute = appTransactionIndexRouteImport.update({
   id: '/transaction/',
   path: '/transaction/',
+  getParentRoute: () => appRouteRoute,
+} as any)
+const appReportIndexRoute = appReportIndexRouteImport.update({
+  id: '/report/',
+  path: '/report/',
   getParentRoute: () => appRouteRoute,
 } as any)
 const appCategoryIndexRoute = appCategoryIndexRouteImport.update({
@@ -82,40 +88,43 @@ const appCategoryIdEditRoute = appCategoryIdEditRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/verify-otp': typeof authVerifyOtpRoute
+  '/': typeof appIndexRoute
   '/category/add': typeof appCategoryAddRoute
   '/transaction/add': typeof appTransactionAddRoute
   '/category': typeof appCategoryIndexRoute
+  '/report': typeof appReportIndexRoute
   '/transaction': typeof appTransactionIndexRoute
   '/category/$id/edit': typeof appCategoryIdEditRoute
   '/transaction/$id/edit': typeof appTransactionIdEditRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
   '/login': typeof authLoginRoute
   '/signup': typeof authSignupRoute
   '/verify-otp': typeof authVerifyOtpRoute
+  '/': typeof appIndexRoute
   '/category/add': typeof appCategoryAddRoute
   '/transaction/add': typeof appTransactionAddRoute
   '/category': typeof appCategoryIndexRoute
+  '/report': typeof appReportIndexRoute
   '/transaction': typeof appTransactionIndexRoute
   '/category/$id/edit': typeof appCategoryIdEditRoute
   '/transaction/$id/edit': typeof appTransactionIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
   '/(app)': typeof appRouteRouteWithChildren
   '/(auth)': typeof authRouteRouteWithChildren
   '/(auth)/login': typeof authLoginRoute
   '/(auth)/signup': typeof authSignupRoute
   '/(auth)/verify-otp': typeof authVerifyOtpRoute
+  '/(app)/': typeof appIndexRoute
   '/(app)/category/add': typeof appCategoryAddRoute
   '/(app)/transaction/add': typeof appTransactionAddRoute
   '/(app)/category/': typeof appCategoryIndexRoute
+  '/(app)/report/': typeof appReportIndexRoute
   '/(app)/transaction/': typeof appTransactionIndexRoute
   '/(app)/category/$id/edit': typeof appCategoryIdEditRoute
   '/(app)/transaction/$id/edit': typeof appTransactionIdEditRoute
@@ -123,46 +132,48 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/login'
     | '/signup'
     | '/verify-otp'
+    | '/'
     | '/category/add'
     | '/transaction/add'
     | '/category'
+    | '/report'
     | '/transaction'
     | '/category/$id/edit'
     | '/transaction/$id/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/login'
     | '/signup'
     | '/verify-otp'
+    | '/'
     | '/category/add'
     | '/transaction/add'
     | '/category'
+    | '/report'
     | '/transaction'
     | '/category/$id/edit'
     | '/transaction/$id/edit'
   id:
     | '__root__'
-    | '/'
     | '/(app)'
     | '/(auth)'
     | '/(auth)/login'
     | '/(auth)/signup'
     | '/(auth)/verify-otp'
+    | '/(app)/'
     | '/(app)/category/add'
     | '/(app)/transaction/add'
     | '/(app)/category/'
+    | '/(app)/report/'
     | '/(app)/transaction/'
     | '/(app)/category/$id/edit'
     | '/(app)/transaction/$id/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
   appRouteRoute: typeof appRouteRouteWithChildren
   authRouteRoute: typeof authRouteRouteWithChildren
 }
@@ -183,12 +194,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
+    '/(app)/': {
+      id: '/(app)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof appIndexRouteImport
+      parentRoute: typeof appRouteRoute
     }
     '/(auth)/verify-otp': {
       id: '/(auth)/verify-otp'
@@ -216,6 +227,13 @@ declare module '@tanstack/react-router' {
       path: '/transaction'
       fullPath: '/transaction'
       preLoaderRoute: typeof appTransactionIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
+    '/(app)/report/': {
+      id: '/(app)/report/'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof appReportIndexRouteImport
       parentRoute: typeof appRouteRoute
     }
     '/(app)/category/': {
@@ -257,18 +275,22 @@ declare module '@tanstack/react-router' {
 }
 
 interface appRouteRouteChildren {
+  appIndexRoute: typeof appIndexRoute
   appCategoryAddRoute: typeof appCategoryAddRoute
   appTransactionAddRoute: typeof appTransactionAddRoute
   appCategoryIndexRoute: typeof appCategoryIndexRoute
+  appReportIndexRoute: typeof appReportIndexRoute
   appTransactionIndexRoute: typeof appTransactionIndexRoute
   appCategoryIdEditRoute: typeof appCategoryIdEditRoute
   appTransactionIdEditRoute: typeof appTransactionIdEditRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
+  appIndexRoute: appIndexRoute,
   appCategoryAddRoute: appCategoryAddRoute,
   appTransactionAddRoute: appTransactionAddRoute,
   appCategoryIndexRoute: appCategoryIndexRoute,
+  appReportIndexRoute: appReportIndexRoute,
   appTransactionIndexRoute: appTransactionIndexRoute,
   appCategoryIdEditRoute: appCategoryIdEditRoute,
   appTransactionIdEditRoute: appTransactionIdEditRoute,
@@ -295,7 +317,6 @@ const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
   appRouteRoute: appRouteRouteWithChildren,
   authRouteRoute: authRouteRouteWithChildren,
 }

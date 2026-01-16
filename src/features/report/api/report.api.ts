@@ -12,4 +12,11 @@ export const reportApi = {
     });
     return res.data.data;
   },
+
+  getLineChart: async (params: { year: number; month?: number }) => {
+    const res = await axiosClient.get(API_ENDPOINTS.REPORT.GET_LINE_CHART, {
+      params,
+    });
+    return res.data;
+  },
 };

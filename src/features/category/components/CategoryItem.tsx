@@ -24,7 +24,7 @@ const CategoryItem = ({ category }: { category: Category }) => {
   return (
     <div
       onClick={handleClick}
-      className="flex items-center justify-between p-4 rounded-md shadow bg-white"
+      className="flex items-center justify-between p-4 border rounded-4xl shadow bg-white active:scale-[0.98]"
     >
       <div className="space-y-2">
         <AppIcon name={category.iconKey} />

@@ -10,9 +10,17 @@
         "all": "Tất cả",
         "income": "Thu nhập",
         "expense": "Chi tiêu",
+        "revenue": "Doanh thu tổng",
         "save": "Lưu",
         "add":"Tạo mới",
         "edit":"Chỉnh sửa",
-        "date": "Ngày"
+        "date": "Ngày",
+        "flow_money": "Xu hướng dòng tiền",
+        "month": "Tháng",
+        "year": "Năm",
+        "spent_analysis": "Chi tiêu",
+        "report": "Báo cáo",
+        "report_financial": "Báo cáo tài chính",
+        "category_analysis": "Thu chi danh mục"
     }
 }

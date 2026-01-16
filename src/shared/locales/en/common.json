@@ -1,18 +1,26 @@
 {
-    "common": {
-        "title": "Hello world!",
-        "home": "Home",
-        "all": "All",
-        "income": "Income",
-        "expense": "Expense",
-        "category": "Category",
-        "transaction": "Transaction",
-        "personal": "Personal",
-        "cancel": "Cancel",
-        "delete": "Delete",
-        "save": "Save",
-        "add":"Add",
-        "edit":"Edit",
-        "date": "Date"
-    }
+  "common": {
+    "title": "Hello world!",
+    "home": "Home",
+    "all": "All",
+    "income": "Income",
+    "expense": "Expense",
+    "revenue": "Revenue",
+    "category": "Category",
+    "transaction": "Transaction",
+    "personal": "Personal",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "save": "Save",
+    "add": "Add",
+    "edit": "Edit",
+    "date": "Date",
+    "flow_money": "Cash flow over time",
+    "month": "Month",
+    "year": "Year",
+    "spent_analysis": "Spending analysis",
+    "report": "Report",
+    "report_financial": "Financial report",
+    "category_analysis": "Category analysis"
+  }
 }

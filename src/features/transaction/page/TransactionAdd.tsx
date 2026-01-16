@@ -38,7 +38,7 @@ const TransactionAdd = () => {
     amount: 0,
     type,
     note: "",
-    transactionDate: new Date().toISOString().split("T")[0],
+    transactionDate: date ,
   };
 
   const form = useForm({

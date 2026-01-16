@@ -11,3 +11,10 @@ export const useReportQuery = (params: {
     queryFn: () => reportApi.getReport(params),
   });
 };
+
+export const useLineChartQuery = (params: { year: number; month?: number }) => {
+  return useQuery({
+    queryKey: ["line-chart", params],
+    queryFn: () => reportApi.getLineChart(params),
+  });
+};
