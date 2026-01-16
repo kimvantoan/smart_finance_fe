@@ -126,12 +126,9 @@ const CategoryAdd = () => {
                         value={iconKey}
                         className="
                         flex items-center justify-center size-10
-                        text-gray-500 border shadow 
-                        transition-colors active:scale-90
+                        transition-colors
 
                         data-[state=on]:bg-primary 
-                        data-[state=off]:bg-gray-50 
-                        data-[state=on]:text-white
                         data-[state=on]:border-primary
                       "
                         aria-label={`Toggle ${iconKey}`}

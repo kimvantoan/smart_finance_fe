@@ -31,5 +31,8 @@ export const API_ENDPOINTS = {
     CREATE_TRANSACTION: "/transactions",
     UPDATE_TRANSACTION: (transactionId: number) => `/transactions/${transactionId}`,
     DELETE_TRANSACTION: (transactionId: number) => `/transactions/${transactionId}`,
+  },
+  REPORT:{
+    GET_REPORTS: "/reports"
   }
 } as const;

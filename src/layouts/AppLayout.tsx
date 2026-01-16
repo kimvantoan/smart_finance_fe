@@ -3,7 +3,7 @@ import MenuBar from "./MenuBar";
 
 export function AppLayout() {
   return (
-      <div className="h-screen pb-16 pt-4 px-4">
+      <div className="max-h-screen pt-4 px-4 overflow-hidden">
         <Outlet />
         <MenuBar />
       </div>
