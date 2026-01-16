@@ -8,7 +8,7 @@ const MenuBar = () => {
   const active = "text-primary";
   return (
     <div className="flex bg-white justify-around items-center w-full fixed bottom-0 left-0 py-4 shadow border-t">
-      <Link to="/category" activeProps={{ className: active }}>
+      <Link to="/" activeProps={{ className: active }}>
         <div className="flex flex-col gap-2 items-center">
           <Layers />
           <TypographySmall text={t("common.home")} />

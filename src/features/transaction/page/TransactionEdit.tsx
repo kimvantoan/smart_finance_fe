@@ -165,14 +165,12 @@ const TransactionEdit = () => {
                   >
                     {categories?.dataList?.map((category) => (
                       <ToggleGroupItem
-                        className="
+                      className="
                       flex flex-col items-center justify-center size-fit
-                      text-gray-500 border border-primary shadow 
-                      transition-colors active:scale-90 w-full py-1
+                      border border-primary/30 shadow 
+                      transition-colors w-full py-1 text-black
 
-                      data-[state=on]:bg-primary 
                       data-[state=off]:bg-gray-50 
-                      data-[state=on]:text-white
                       data-[state=on]:border-primary
                     "
                         key={category.id}

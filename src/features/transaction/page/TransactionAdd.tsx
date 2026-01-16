@@ -30,7 +30,9 @@ const TransactionAdd = () => {
   const [type, setType] = useState<"INCOME" | "EXPENSE">("INCOME");
   const { data } = useCategoriesQuery({ status: "ACTIVE", type });
   const mutation = useCreateTransaction();
-  const [date, setDate] = useState<string>(new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState<string>(
+    new Date().toISOString().split("T")[0]
+  );
   const defaultValues: TransactionPayload = {
     categoryId: 0,
     amount: 0,
@@ -93,7 +95,9 @@ const TransactionAdd = () => {
             children={(field) => {
               return (
                 <Field>
-                  <FieldLabel>{t("transaction.amount").toUpperCase()}</FieldLabel>
+                  <FieldLabel>
+                    {t("transaction.amount").toUpperCase()}
+                  </FieldLabel>
                   <InputGroup>
                     <InputGroupInput
                       required
@@ -129,12 +133,10 @@ const TransactionAdd = () => {
                       <ToggleGroupItem
                         className="
                       flex flex-col items-center justify-center size-fit
-                      text-gray-500 border border-primary shadow 
-                      transition-colors active:scale-90 w-full py-1
+                      border border-primary/30 shadow 
+                      transition-colors w-full py-1 text-black
 
-                      data-[state=on]:bg-primary 
                       data-[state=off]:bg-gray-50 
-                      data-[state=on]:text-white
                       data-[state=on]:border-primary
                     "
                         key={category.id}
