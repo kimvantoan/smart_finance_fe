@@ -1,16 +1,9 @@
-import { useState } from 'react'
-import { Button } from '../shared/components/ui/button'
-
+import { router } from "@/router";
+import { useAuth } from "@/shared/utils/auth";
+import { RouterProvider } from "@tanstack/react-router";
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <Button variant="destructive" size="lg" onClick={() => setCount((count) => count + 1)}>
-        Count is {count}
-      </Button>
-    </>
-  )
+  const authentication = useAuth();
+  return <RouterProvider router={router} context={{ authentication }} />;
 }
 
-export default App
+export default App;

@@ -1,0 +1,8 @@
+{
+  "transaction": {
+    "transaction": "Transaction",
+    "add_transaction": "Add transaction",
+    "amount": "Amount",
+    "note": "Note"
+  }
+}
