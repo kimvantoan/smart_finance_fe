@@ -24,21 +24,20 @@ import {
   useUpdateCategories,
 } from "../api/category.mutation";
 import { formSchema, type CategoryPayload } from "../type";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { Route } from "@/routes/(app)/category/$id.edit";
-import { categoryQueryOptions } from "../api/category.query";
 import { useEffect, useState } from "react";
 import { ChevronLeft, Trash2 } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { TypographyMuted } from "@/shared/components/common/TypographyMuted";
+import { Route } from "@/routes/(app)/category/$id.edit";
 
 const CategoryEdit = () => {
-  const { id } = Route.useLoaderData();
+  const { id } = Route.useParams();
   const { t } = useTranslation("category");
   const { t: m } = useTranslation("common");
   const mutation = useUpdateCategories();
   const mutationDelete = useDeleteCategory();
-  const { data: category } = useSuspenseQuery(categoryQueryOptions(id)).data;
+  const category = Route.useLoaderData().data;
+  
   const [type, setType] = useState<"INCOME" | "EXPENSE">(category?.type ?? "EXPENSE");
 
   const defaultValues: CategoryPayload = {
@@ -54,7 +53,9 @@ const CategoryEdit = () => {
       onSubmit: formSchema,
     },
     onSubmit: ({ value }) => {
-      mutation.mutate({ categoryId: id, categoryData: value });
+      console.log(value);
+      
+      mutation.mutate({ categoryId: Number(id), categoryData: value });
     },
   });
   useEffect(() => {
@@ -77,7 +78,7 @@ const CategoryEdit = () => {
         <Button
           size={"icon-lg"}
           className="text-destructive"
-          onClick={() => mutationDelete.mutate(id)}
+          onClick={() => mutationDelete.mutate(Number(id))}
           variant={"ghost"}
         >
           <Trash2 />

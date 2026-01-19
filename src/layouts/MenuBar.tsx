@@ -7,7 +7,7 @@ const MenuBar = () => {
   const { t } = useTranslation("common");
   const active = "text-primary";
   return (
-    <div className="flex bg-white justify-around items-center w-full fixed bottom-0 left-0 py-4 shadow border-t">
+    <div className="flex bg-white justify-around items-center w-full fixed bottom-0 left-0 py-2 shadow border-t">
       <Link to="/" activeProps={{ className: active }}>
         <div className="flex flex-col gap-2 items-center">
           <ReceiptText />
@@ -26,7 +26,7 @@ const MenuBar = () => {
           <TypographySmall text={t("common.report")} />
         </div>
       </Link>
-      <Link to="/category" activeProps={{ className: active }}>
+      <Link to="/setting" activeProps={{ className: active }}>
         <div className="flex flex-col items-center gap-2">
           <User />
           <TypographySmall text={t("common.personal")} />

@@ -17,7 +17,7 @@ import { ScrollArea } from "@/shared/components/ui/scroll-area";
 import { TypographyH3 } from "@/shared/components/common/TypographyH3";
 const Transactions = () => {
   const { t } = useTranslation("transaction");
-  const { t: m } = useTranslation("common");
+  const { t: m, i18n } = useTranslation("common");
   const currentMonth = String(new Date().getMonth() + 1).padStart(2, "0");
   const currentYear = String(new Date().getFullYear());
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const Transactions = () => {
         <Button onClick={handlePrevMonth} variant={"ghost"} size={"icon"}>
           <ChevronLeft />
         </Button>
-        <TypographyH3 text={`${month > 0 ? `Tháng ${month},` : ""} ${year}`} />
+        <TypographyH3 text={`${month > 0 ? `${m("common.month")} ${month},` : ""} ${year}`} />
         <Button onClick={handleNextMonth} variant={"ghost"} size={"icon"}>
           <ChevronRight />
         </Button>
@@ -103,7 +103,7 @@ const Transactions = () => {
         <ScrollArea className="h-[calc(100vh-370px)]">
           {grouped &&
             Object.entries(grouped).map(([date, transactions]) => {
-              const header = formatDateHeader(date);
+              const header = formatDateHeader(date,m,i18n.language);
 
               return (
                 <div key={date} className="mb-4">

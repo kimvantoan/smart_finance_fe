@@ -12,4 +12,9 @@ interface verifyOtpPayload{
     otp: string
 }
 
-export type { LoginPayload ,RegisterPayload, verifyOtpPayload};
+interface ChangePasswordPayload {
+    oldPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+}
+export type { LoginPayload ,RegisterPayload, verifyOtpPayload, ChangePasswordPayload };

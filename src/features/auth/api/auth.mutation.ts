@@ -1,5 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import type { LoginPayload, RegisterPayload, verifyOtpPayload } from "../types";
+import type {
+  ChangePasswordPayload,
+  LoginPayload,
+  RegisterPayload,
+  verifyOtpPayload,
+} from "../types";
 import { authApi } from "./auth.api";
 import { useNavigate } from "@tanstack/react-router";
 import type { ApiErrorResponse } from "@/shared/types/ApiErrorResponse";
@@ -9,7 +14,7 @@ import { setTokens } from "@/shared/utils/token";
 
 export const useLoginMutation = () => {
   const navigate = useNavigate();
-    const { t } = useTranslation("auth");
+  const { t } = useTranslation("auth");
   return useMutation({
     mutationFn: (payload: LoginPayload) => {
       return authApi.login(payload);
@@ -21,6 +26,7 @@ export const useLoginMutation = () => {
       });
     },
     onError: (error: ApiErrorResponse) => {
+      console.log("error", error);
       if (error.statusCode === 401) {
         toast.error(t("auth.email_or_password_invalid")!);
       }
@@ -41,7 +47,7 @@ export const useSignupMutation = () => {
     onSuccess: (data, payload) => {
       navigate({
         to: "/verify-otp",
-        search: { email: payload.email, expiredAt: data.data },
+        search: { email: payload.email, expiredAt: data.data.data },
       });
     },
     onError: (error: ApiErrorResponse) => {
@@ -62,7 +68,7 @@ export const useResendOtpMutation = () => {
       navigate({
         to: "/verify-otp",
         replace: true,
-        search: { email: payload.email, expiredAt: data.data },
+        search: { email: payload.email, expiredAt: data.data.data },
       });
     },
   });
@@ -80,10 +86,35 @@ export const useVerifyOtpMutation = () => {
         to: "/login",
         replace: true,
       });
+      toast.success(t("auth.otp_verified")!);
     },
     onError: (error: ApiErrorResponse) => {
       if (error.statusCode === 411) {
         toast.error(t("auth.invalid_otp"));
+      }
+    },
+  });
+};
+
+export const useChangePasswordMutation = () => {
+  const { t } = useTranslation("auth");
+  const navigate = useNavigate();
+  return useMutation({
+    mutationFn: (data: ChangePasswordPayload) => {
+      return authApi.changePassword(data);
+    },
+    onSuccess: () => {
+      toast.success(t("auth.change_password_success"));
+      navigate({
+        to: "..",
+      });
+    },
+    onError: (error: ApiErrorResponse) => {
+      if (error.statusCode === 412) {
+        toast.error(t("auth.old_password_incorrect")!);
+      }
+      if (error.statusCode === 413) {
+        toast.error(t("auth.new_password_confirmed")!);
       }
     },
   });

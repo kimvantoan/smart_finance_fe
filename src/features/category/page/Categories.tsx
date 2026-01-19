@@ -6,22 +6,23 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/shared/components/ui/tabs";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { categoriesQueryOptions } from "../api/category.query";
+import {  useCategoriesQuery } from "../api/category.query";
 import { useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import CategoryItem from "../components/CategoryItem";
+import { ScrollArea } from "@/shared/components/ui/scroll-area";
 
 const Categories = () => {
   const { t } = useTranslation("category");
   const { t: m } = useTranslation("common");
-  const [type, setType] = useState<"INCOME" | "EXPENSE">("EXPENSE");
-  const { data } = useSuspenseQuery(
-    categoriesQueryOptions({ type })
-  );
   const navigate = useNavigate();
+  const [type, setType] = useState<"INCOME" | "EXPENSE">("EXPENSE");
+  const { data, isLoading } = useCategoriesQuery({ type });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <div>
       <div className="flex justify-between">
@@ -40,23 +41,33 @@ const Categories = () => {
       </div>
       <Tabs defaultValue="expense" className="w-full mt-4">
         <TabsList className="w-full">
-          <TabsTrigger className="text-destructive" onClick={() => setType("EXPENSE")} value="expense">
+          <TabsTrigger
+            className="text-destructive"
+            onClick={() => setType("EXPENSE")}
+            value="expense"
+          >
             {t("category.expense")}
           </TabsTrigger>
-          <TabsTrigger className="text-primary" onClick={() => setType("INCOME")} value="income">
+          <TabsTrigger
+            className="text-primary"
+            onClick={() => setType("INCOME")}
+            value="income"
+          >
             {t("category.income")}
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="income" className="space-y-3">
-          {data.dataList?.map((category) => (
-            <CategoryItem key={category.id} category={category} />
-          ))}
-        </TabsContent>
-        <TabsContent value="expense" className="space-y-3">
-          {data.dataList?.map((category) => (
-            <CategoryItem key={category.id} category={category} />
-          ))}
-        </TabsContent>
+        <ScrollArea className="h-[calc(100vh-190px)]">
+          <TabsContent value="income" className="space-y-3">
+            {data?.dataList?.map((category) => (
+              <CategoryItem key={category.id} category={category} />
+            ))}
+          </TabsContent>
+          <TabsContent value="expense" className="space-y-3">
+            {data?.dataList?.map((category) => (
+              <CategoryItem key={category.id} category={category} />
+            ))}
+          </TabsContent>
+        </ScrollArea>
       </Tabs>
     </div>
   );

@@ -6,8 +6,8 @@ import axios, {
 } from "axios";
 import {
   getAccessToken,
-  getRefreshToken,
-  setTokens,
+  // getRefreshToken,
+  // setTokens,
   clearTokens,
 } from "@/shared/utils/token";
 import type { ResponseType } from "../types/Response";
@@ -141,51 +141,51 @@ axiosClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        const refreshToken = getRefreshToken();
+        // const refreshToken = getRefreshToken();
 
         // Không có refresh token → logout
-        if (!refreshToken) throw new Error("No refresh token");
+          // if (!refreshToken) throw new Error("No refresh token");
 
         /**
          * Gọi API refresh token
          * Dùng axios gốc để tránh loop interceptor
          */
-        const res = await axios.post<
-          ResponseType<{
-            accessToken: string;
-            refreshToken: string;
-          }>
-        >(`${import.meta.env.VITE_API_URL}/auth/refresh-token`, {
-          refreshToken,
-        });
+        // const res = await axios.post<
+        //   ResponseType<{
+        //     accessToken: string;
+        //     refreshToken: string;
+        //   }>
+        // >(`${import.meta.env.VITE_API_URL}/auth/refresh-token`, {
+        //   refreshToken,
+        // });
 
         /**
          * Lấy token mới từ response
          */
-        const tokenData = res.data.data;
+        // const tokenData = res.data.data;
 
-        if (!tokenData?.accessToken) {
-          throw new Error("Refresh token response is invalid");
-        }
-        const newAccessToken = tokenData.accessToken;
-        const newRefreshToken = tokenData.refreshToken;
+        // if (!tokenData?.accessToken) {
+        //   throw new Error("Refresh token response is invalid");
+        // }
+        // const newAccessToken = tokenData.accessToken;
+        // const newRefreshToken = tokenData.refreshToken;
 
         /**
          * Lưu token mới
          */
-        setTokens(newAccessToken, newRefreshToken);
+        // setTokens(newAccessToken, newRefreshToken);
 
-        /**
-         * Chạy lại toàn bộ request đang chờ
-         */
-        processQueue(null, newAccessToken);
+        // /**
+        //  * Chạy lại toàn bộ request đang chờ
+        //  */
+        // processQueue(null, newAccessToken);
 
         /**
          * Gắn token mới cho request hiện tại
          * rồi gọi lại API
          */
-        originalRequest.headers!.Authorization = `Bearer ${newAccessToken}`;
-        return axiosClient(originalRequest);
+        // originalRequest.headers!.Authorization = `Bearer ${newAccessToken}`;
+        // return axiosClient(originalRequest);
       } catch (refreshError) {
         /**
          * Refresh thất bại
@@ -193,7 +193,7 @@ axiosClient.interceptors.response.use(
          */
         processQueue(refreshError, null);
         clearTokens();
-        window.location.href = '/login';
+        // window.location.href = '/login';
         return Promise.reject(refreshError);
       } finally {
         /**

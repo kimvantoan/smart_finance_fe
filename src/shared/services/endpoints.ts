@@ -17,6 +17,8 @@ export const API_ENDPOINTS = {
     SIGNUP: "/auth/register",
     RESEND_OTP: "/auth/resend-otp",
     VERIFY_OTP: "/auth/verify-otp",
+    ME: "/auth/me",
+    CHANGE_PASSWORD: "/auth/change-password",
   },
   CATEGORY:{
     GET_CATEGORIES: "/categories",

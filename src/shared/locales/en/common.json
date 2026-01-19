@@ -21,6 +21,16 @@
     "spent_analysis": "Spending analysis",
     "report": "Report",
     "report_financial": "Financial report",
-    "category_analysis": "Category analysis"
+    "category_analysis": "Category analysis",
+    "setting": "Setting",
+    "account": "Account",
+    "change_password": "Change password",
+    "configure": "Configure",
+    "change_language": "Change language",
+    "vietnamese": "Vietnamese",
+    "english": "English",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "logout": "Logout"
   }
 }

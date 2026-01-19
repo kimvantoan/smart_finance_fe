@@ -14,8 +14,8 @@ i18n
   .use(LanguageDetector) // detect browser language
   .use(initReactI18next)
   .init({
+    lng: localStorage.getItem("lang") || "vi",
     fallbackLng: 'vi',
-    lng: 'vi',
     interpolation: {
       escapeValue: false,
     },

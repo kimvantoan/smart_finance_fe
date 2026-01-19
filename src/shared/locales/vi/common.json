@@ -21,6 +21,17 @@
         "spent_analysis": "Chi tiêu",
         "report": "Báo cáo",
         "report_financial": "Báo cáo tài chính",
-        "category_analysis": "Thu chi danh mục"
+        "category_analysis": "Thu chi danh mục",
+        "setting": "Cài đặt",
+        "account": "Tài khoản",
+        "change_password": "Đổi mật khẩu",
+        "configure": "Cấu hình",
+        "change_language": "Thay đổi ngôn ngữ",
+        "vietnamese": "Tiếng Việt",
+        "english": "Tiếng Anh",
+        "today": "Hôm nay",
+        "yesterday": "Hôm qua",
+        "logout": "Đăng xuất"
+
     }
 }
