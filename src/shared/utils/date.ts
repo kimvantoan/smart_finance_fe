@@ -1,3 +1,5 @@
+import type { TFunction } from "i18next";
+
 /* yyyy-MM-dd cho input */
 export const toInputDate = (dateStr: string) => {
     const d = new Date(dateStr);
@@ -7,17 +9,15 @@ export const toInputDate = (dateStr: string) => {
   
   /* yyyy-MM-dd để gửi backend */
   export const toBackendDate = (inputDate: string) => {
-    // inputDate đã là yyyy-MM-dd
     return inputDate;
   };
   
-  /* format để hiển thị */
   export const formatDate = (dateStr: string) => {
     return new Date(dateStr).toLocaleDateString("vi-VN");
   };
   const parseDate = (dateStr: string) => {
     const [y, m, d] = dateStr.split("-").map(Number);
-    return new Date(y, m - 1, d); // local date, không lệch
+    return new Date(y, m - 1, d); 
   };
   
   const isSameDay = (d1: Date, d2: Date) =>
@@ -25,7 +25,7 @@ export const toInputDate = (dateStr: string) => {
     d1.getMonth() === d2.getMonth() &&
     d1.getDate() === d2.getDate();
   
- export const formatDateHeader = (dateStr: string) => {
+ export const formatDateHeader = (dateStr: string,t:TFunction,lang: string) => {
     const date = parseDate(dateStr);
     const today = new Date();
   
@@ -33,18 +33,18 @@ export const toInputDate = (dateStr: string) => {
     yesterday.setDate(today.getDate() - 1);
   
     if (isSameDay(date, today))
-      return { label: "HÔM NAY", right: "Hôm nay" };
+      return { label: t("common.today"), right: t("common.today") };
   
     if (isSameDay(date, yesterday))
-      return { label: "HÔM QUA", right: "Hôm qua" };
+      return { label: t("common.yesterday"), right: t("common.yesterday") };
   
     return {
-      label: date.toLocaleDateString("vi-VN", {
+      label: date.toLocaleDateString(lang, {
         day: "2-digit",
         month: "long",
         year: "numeric",
       }),
-      right: date.toLocaleDateString("vi-VN", {
+      right: date.toLocaleDateString(lang, {
         day: "2-digit",
         month: "2-digit",
       }),

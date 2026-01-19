@@ -16,10 +16,12 @@ import { Route as authVerifyOtpRouteImport } from './routes/(auth)/verify-otp'
 import { Route as authSignupRouteImport } from './routes/(auth)/signup'
 import { Route as authLoginRouteImport } from './routes/(auth)/login'
 import { Route as appTransactionIndexRouteImport } from './routes/(app)/transaction/index'
+import { Route as appSettingIndexRouteImport } from './routes/(app)/setting/index'
 import { Route as appReportIndexRouteImport } from './routes/(app)/report/index'
 import { Route as appCategoryIndexRouteImport } from './routes/(app)/category/index'
 import { Route as appTransactionAddRouteImport } from './routes/(app)/transaction/add'
 import { Route as appCategoryAddRouteImport } from './routes/(app)/category/add'
+import { Route as appSettingChangePasswordIndexRouteImport } from './routes/(app)/setting/change-password/index'
 import { Route as appTransactionIdEditRouteImport } from './routes/(app)/transaction/$id.edit'
 import { Route as appCategoryIdEditRouteImport } from './routes/(app)/category/$id.edit'
 
@@ -56,6 +58,11 @@ const appTransactionIndexRoute = appTransactionIndexRouteImport.update({
   path: '/transaction/',
   getParentRoute: () => appRouteRoute,
 } as any)
+const appSettingIndexRoute = appSettingIndexRouteImport.update({
+  id: '/setting/',
+  path: '/setting/',
+  getParentRoute: () => appRouteRoute,
+} as any)
 const appReportIndexRoute = appReportIndexRouteImport.update({
   id: '/report/',
   path: '/report/',
@@ -76,6 +83,12 @@ const appCategoryAddRoute = appCategoryAddRouteImport.update({
   path: '/category/add',
   getParentRoute: () => appRouteRoute,
 } as any)
+const appSettingChangePasswordIndexRoute =
+  appSettingChangePasswordIndexRouteImport.update({
+    id: '/setting/change-password/',
+    path: '/setting/change-password/',
+    getParentRoute: () => appRouteRoute,
+  } as any)
 const appTransactionIdEditRoute = appTransactionIdEditRouteImport.update({
   id: '/transaction/$id/edit',
   path: '/transaction/$id/edit',
@@ -96,9 +109,11 @@ export interface FileRoutesByFullPath {
   '/transaction/add': typeof appTransactionAddRoute
   '/category': typeof appCategoryIndexRoute
   '/report': typeof appReportIndexRoute
+  '/setting': typeof appSettingIndexRoute
   '/transaction': typeof appTransactionIndexRoute
   '/category/$id/edit': typeof appCategoryIdEditRoute
   '/transaction/$id/edit': typeof appTransactionIdEditRoute
+  '/setting/change-password': typeof appSettingChangePasswordIndexRoute
 }
 export interface FileRoutesByTo {
   '/login': typeof authLoginRoute
@@ -109,9 +124,11 @@ export interface FileRoutesByTo {
   '/transaction/add': typeof appTransactionAddRoute
   '/category': typeof appCategoryIndexRoute
   '/report': typeof appReportIndexRoute
+  '/setting': typeof appSettingIndexRoute
   '/transaction': typeof appTransactionIndexRoute
   '/category/$id/edit': typeof appCategoryIdEditRoute
   '/transaction/$id/edit': typeof appTransactionIdEditRoute
+  '/setting/change-password': typeof appSettingChangePasswordIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -125,9 +142,11 @@ export interface FileRoutesById {
   '/(app)/transaction/add': typeof appTransactionAddRoute
   '/(app)/category/': typeof appCategoryIndexRoute
   '/(app)/report/': typeof appReportIndexRoute
+  '/(app)/setting/': typeof appSettingIndexRoute
   '/(app)/transaction/': typeof appTransactionIndexRoute
   '/(app)/category/$id/edit': typeof appCategoryIdEditRoute
   '/(app)/transaction/$id/edit': typeof appTransactionIdEditRoute
+  '/(app)/setting/change-password/': typeof appSettingChangePasswordIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -140,9 +159,11 @@ export interface FileRouteTypes {
     | '/transaction/add'
     | '/category'
     | '/report'
+    | '/setting'
     | '/transaction'
     | '/category/$id/edit'
     | '/transaction/$id/edit'
+    | '/setting/change-password'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/login'
@@ -153,9 +174,11 @@ export interface FileRouteTypes {
     | '/transaction/add'
     | '/category'
     | '/report'
+    | '/setting'
     | '/transaction'
     | '/category/$id/edit'
     | '/transaction/$id/edit'
+    | '/setting/change-password'
   id:
     | '__root__'
     | '/(app)'
@@ -168,9 +191,11 @@ export interface FileRouteTypes {
     | '/(app)/transaction/add'
     | '/(app)/category/'
     | '/(app)/report/'
+    | '/(app)/setting/'
     | '/(app)/transaction/'
     | '/(app)/category/$id/edit'
     | '/(app)/transaction/$id/edit'
+    | '/(app)/setting/change-password/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -229,6 +254,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appTransactionIndexRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/setting/': {
+      id: '/(app)/setting/'
+      path: '/setting'
+      fullPath: '/setting'
+      preLoaderRoute: typeof appSettingIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/report/': {
       id: '/(app)/report/'
       path: '/report'
@@ -257,6 +289,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof appCategoryAddRouteImport
       parentRoute: typeof appRouteRoute
     }
+    '/(app)/setting/change-password/': {
+      id: '/(app)/setting/change-password/'
+      path: '/setting/change-password'
+      fullPath: '/setting/change-password'
+      preLoaderRoute: typeof appSettingChangePasswordIndexRouteImport
+      parentRoute: typeof appRouteRoute
+    }
     '/(app)/transaction/$id/edit': {
       id: '/(app)/transaction/$id/edit'
       path: '/transaction/$id/edit'
@@ -280,9 +319,11 @@ interface appRouteRouteChildren {
   appTransactionAddRoute: typeof appTransactionAddRoute
   appCategoryIndexRoute: typeof appCategoryIndexRoute
   appReportIndexRoute: typeof appReportIndexRoute
+  appSettingIndexRoute: typeof appSettingIndexRoute
   appTransactionIndexRoute: typeof appTransactionIndexRoute
   appCategoryIdEditRoute: typeof appCategoryIdEditRoute
   appTransactionIdEditRoute: typeof appTransactionIdEditRoute
+  appSettingChangePasswordIndexRoute: typeof appSettingChangePasswordIndexRoute
 }
 
 const appRouteRouteChildren: appRouteRouteChildren = {
@@ -291,9 +332,11 @@ const appRouteRouteChildren: appRouteRouteChildren = {
   appTransactionAddRoute: appTransactionAddRoute,
   appCategoryIndexRoute: appCategoryIndexRoute,
   appReportIndexRoute: appReportIndexRoute,
+  appSettingIndexRoute: appSettingIndexRoute,
   appTransactionIndexRoute: appTransactionIndexRoute,
   appCategoryIdEditRoute: appCategoryIdEditRoute,
   appTransactionIdEditRoute: appTransactionIdEditRoute,
+  appSettingChangePasswordIndexRoute: appSettingChangePasswordIndexRoute,
 }
 
 const appRouteRouteWithChildren = appRouteRoute._addFileChildren(

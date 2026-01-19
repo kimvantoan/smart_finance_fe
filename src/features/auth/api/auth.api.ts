@@ -1,5 +1,10 @@
 import axiosClient from "@/shared/services/axiosClient";
-import type { LoginPayload, RegisterPayload, verifyOtpPayload } from "../types";
+import type {
+  ChangePasswordPayload,
+  LoginPayload,
+  RegisterPayload,
+  verifyOtpPayload,
+} from "../types";
 import { API_ENDPOINTS } from "@/shared/services/endpoints";
 
 export const authApi = {
@@ -14,4 +19,9 @@ export const authApi = {
 
   resendOtp: (data: { email: string }) =>
     axiosClient.post(API_ENDPOINTS.AUTH.RESEND_OTP, data),
+
+  me: () => axiosClient.get(API_ENDPOINTS.AUTH.ME),
+
+  changePassword: (data: ChangePasswordPayload) =>
+    axiosClient.post(API_ENDPOINTS.AUTH.CHANGE_PASSWORD, data),
 };

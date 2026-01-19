@@ -1,9 +1,9 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { RouterProvider } from "@tanstack/react-router";
 import { Providers } from "./app/Providers";
 import "@/app/i18n";
 import { router } from "./router";
+import App from "./app/App";
 
 // Register the router instance for type safety
 declare module "@tanstack/react-router" {
@@ -13,6 +13,6 @@ declare module "@tanstack/react-router" {
 }
 createRoot(document.getElementById("root")!).render(
   <Providers>
-    <RouterProvider router={router} />
+    <App />
   </Providers>
 );

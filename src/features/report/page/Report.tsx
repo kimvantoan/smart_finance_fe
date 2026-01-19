@@ -7,8 +7,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useReportQuery } from "../api/report.query";
-import ChartLine from "@/features/dashboard/components/ChartLine";
-import ChartPie from "@/features/dashboard/components/ChartPie";
+import ChartLine from "@/features/report/components/ChartLine";
+import ChartPie from "@/features/report/components/ChartPie";
 import { ScrollArea } from "@/shared/components/ui/scroll-area";
 
 const Report = () => {
@@ -81,7 +81,7 @@ const Report = () => {
         <Button onClick={handlePrevTime} variant={"ghost"} size={"icon"}>
           <ChevronLeft />
         </Button>
-        <TypographyH3 text={`${month > 0 ? `Tháng ${month},` : ""} ${year}`} />
+        <TypographyH3 text={`${month > 0 ? `${t("common.month")} ${month},` : ""} ${year}`} />
         <Button onClick={handleNextTime} variant={"ghost"} size={"icon"}>
           <ChevronRight />
         </Button>

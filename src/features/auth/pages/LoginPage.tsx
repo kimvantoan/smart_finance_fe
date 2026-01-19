@@ -48,7 +48,6 @@ const LoginPage = () => {
 
   return (
     <form
-      id="login-form"
       onSubmit={(e) => {
         e.preventDefault();
         form.handleSubmit();
@@ -108,7 +107,6 @@ const LoginPage = () => {
         <Button
           className="w-full"
           type="submit"
-          form="login-form"
           disabled={mutation.isPending}
         >
           {mutation.isPending && <Spinner />}
